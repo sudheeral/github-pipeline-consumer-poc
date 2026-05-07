@@ -1,0 +1,17 @@
+# Consumer pipeline — calls the PDP framework's reusable app workflow.
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop, "feature/**", "bugfix/**", "hotfix/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pipeline:
+    uses: sudheeral/github-pipeline-poc/.github/workflows/app.yml@main
+    with:
+      deployment_type: ecs
+    secrets: inherit

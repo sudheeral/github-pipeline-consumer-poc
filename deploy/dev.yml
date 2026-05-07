@@ -1,0 +1,30 @@
+# Dev environment config for github-pipeline-consumer-poc.
+# Placeholder values — replace with real AWS account details for actual deployments.
+
+aws:
+  account_id: "123456789012"
+  region: us-east-1
+
+CloudFormationParameters:
+  ECS:
+    Service:
+      Cluster: consumer-poc-dev-cluster
+      DesiredCount: "1"
+      NetworkConfiguration:
+        AwsVpcConfiguration:
+          SecurityGroups: sg-placeholder
+          Subnets: subnet-placeholder
+    TaskDefinition:
+      ContainerDefinitions0:
+        HealthCheck:
+          Command: "curl http://localhost:3000"
+          Interval: "30"
+          Retries: "3"
+          StartPeriod: "30"
+          Timeout: "5"
+        Image: "123456789012.dkr.ecr.us-east-1.amazonaws.com/consumer-poc"
+        PortMappings:
+          ContainerPort: "3000"
+      Cpu: "512"
+      Memory: "1024"
+      NetworkMode: awsvpc

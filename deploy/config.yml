@@ -1,0 +1,17 @@
+# App-level pipeline config for github-pipeline-consumer-poc.
+# Inherits defaults from the psf group (groups/psf.yml in the framework repo).
+
+app:
+  base: psf
+  secops:
+    sast:
+      gitleaks:
+        allow_failure: false
+      semgrep:
+        allow_failure: true
+    linting:
+      hadolint:
+        allow_failure: true
+
+aws:
+  s3_bucket: pipeline-consumer-poc-artifacts
