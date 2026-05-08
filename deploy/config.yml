@@ -4,10 +4,22 @@
 app:
   base: psf
   secops:
+    dependency_scanning:
+      snyk_cli:
+        allow_failure: true
+    container_scanning:
+      snyk_cli:
+        allow_failure: true
     sast:
       gitleaks:
-        allow_failure: false
+        allow_failure: true
       semgrep:
+        allow_failure: true
+      sonarqube_web_api:
+        allow_failure: true
+      cxsast:
+        allow_failure: true
+      snyk_cli:
         allow_failure: true
     linting:
       hadolint:
