@@ -8,10 +8,19 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      runner:
+        description: "Runner to use"
+        type: choice
+        default: "self-hosted"
+        options:
+          - self-hosted
+          - ubuntu-latest
 
 jobs:
   pipeline:
     uses: sudheeral/github-pipeline-poc/.github/workflows/app.yml@main
     with:
       deployment_type: ecs
+      runs_on: ${{ inputs.runner || 'self-hosted' }}
     secrets: inherit
