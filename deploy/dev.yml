@@ -2,7 +2,7 @@
 # Placeholder values — replace with real AWS account details for actual deployments.
 
 aws:
-  account_id: "123456789012"
+  account_id: "654654533841"
   region: us-east-1
 
 CloudFormationParameters:
@@ -22,7 +22,7 @@ CloudFormationParameters:
           Retries: "3"
           StartPeriod: "30"
           Timeout: "5"
-        Image: "123456789012.dkr.ecr.us-east-1.amazonaws.com/consumer-poc"
+        Image: "654654533841.dkr.ecr.us-east-1.amazonaws.com/github-pipeline-consumer-poc"
         PortMappings:
           ContainerPort: "3000"
       Cpu: "512"
