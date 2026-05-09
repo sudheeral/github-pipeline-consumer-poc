@@ -1,6 +1,6 @@
 # Consumer pipeline — calls the PDP framework's reusable app workflow.
 
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
@@ -18,7 +18,8 @@ on:
           - ubuntu-latest
 
 jobs:
-  pipeline:
+  ci:
+    name: CI
     uses: sudheeral/github-pipeline-poc/.github/workflows/app.yml@main
     with:
       deployment_type: ecs
