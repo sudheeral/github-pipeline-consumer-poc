@@ -1,0 +1,45 @@
+# Pre-Production environment config for github-pipeline-consumer-poc.
+
+aws:
+  account_id: "654654533841"
+  region: us-east-1
+
+CloudFormationParameters:
+  ECS:
+    Service:
+      Cluster: consumer-poc-ppe-cluster
+      DesiredCount: "1"
+      HealthCheckGracePeriodSeconds: "60"
+      NetworkConfiguration:
+        AwsVpcConfiguration:
+          SecurityGroups: ""
+          Subnets: subnet-097241e73e0791123,subnet-02fceb818893321bf,subnet-0d28ecdf3c4e16fcb
+    TaskDefinition:
+      ContainerDefinitions0:
+        HealthCheck:
+          Command: "wget -qO /dev/null http://localhost:3000/ || exit 1"
+          Interval: "30"
+          Retries: "3"
+          StartPeriod: "30"
+          Timeout: "5"
+        Image: "654654533841.dkr.ecr.us-east-1.amazonaws.com/github-pipeline-consumer-poc"
+        PortMappings:
+          ContainerPort: "3000"
+      Cpu: "512"
+      Memory: "1024"
+      NetworkMode: awsvpc
+
+  ElasticLoadBalancingV2:
+    Listener:
+      Certificates: arn:aws:acm:us-east-1:654654533841:certificate/0f01e1fd-c6cc-4998-b014-9246da964b68
+    LoadBalancer:
+      Scheme: internal
+      SecurityGroups: ""
+      Subnets: subnet-097241e73e0791123,subnet-02fceb818893321bf,subnet-0d28ecdf3c4e16fcb
+    TargetGroup:
+      HealthCheckPath: /
+      VpcId: vpc-05a3ffeccd31b040a
+
+  WAFv2:
+    WebACLAssociation:
+      WebACLArn: ""
