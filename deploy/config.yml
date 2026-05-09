@@ -26,4 +26,6 @@ app:
         allow_failure: true
 
 aws:
+  account_id: "654654533841"
+  region: us-east-1
   s3_bucket: pipeline-consumer-poc-artifacts
