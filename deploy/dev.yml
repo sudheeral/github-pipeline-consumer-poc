@@ -21,7 +21,7 @@ CloudFormationParameters:
     TaskDefinition:
       ContainerDefinitions0:
         HealthCheck:
-          Command: "curl -f http://localhost:3000/ || exit 1"
+          Command: "wget -qO /dev/null http://localhost:3000/ || exit 1"
           Interval: "30"
           Retries: "3"
           StartPeriod: "30"
