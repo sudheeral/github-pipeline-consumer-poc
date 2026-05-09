@@ -1,5 +1,8 @@
 # Dev environment config for github-pipeline-consumer-poc.
-# Placeholder values — replace with real AWS account details for actual deployments.
+#
+# CloudFormationParameters are passed to cloudformation/ecs.yml via the
+# deploy-ecs action. The flatten_cf_params.py script maps these nested
+# values to flat CF parameter names.
 
 aws:
   account_id: "654654533841"
@@ -10,14 +13,15 @@ CloudFormationParameters:
     Service:
       Cluster: consumer-poc-dev-cluster
       DesiredCount: "1"
+      HealthCheckGracePeriodSeconds: "60"
       NetworkConfiguration:
         AwsVpcConfiguration:
-          SecurityGroups: sg-placeholder
-          Subnets: subnet-placeholder
+          SecurityGroups: ""
+          Subnets: subnet-097241e73e0791123,subnet-02fceb818893321bf,subnet-0d28ecdf3c4e16fcb
     TaskDefinition:
       ContainerDefinitions0:
         HealthCheck:
-          Command: "curl http://localhost:3000"
+          Command: "curl -f http://localhost:3000/ || exit 1"
           Interval: "30"
           Retries: "3"
           StartPeriod: "30"
@@ -28,3 +32,18 @@ CloudFormationParameters:
       Cpu: "512"
       Memory: "1024"
       NetworkMode: awsvpc
+
+  ElasticLoadBalancingV2:
+    Listener:
+      Certificates: arn:aws:acm:us-east-1:654654533841:certificate/0f01e1fd-c6cc-4998-b014-9246da964b68
+    LoadBalancer:
+      Scheme: internal
+      SecurityGroups: ""
+      Subnets: subnet-097241e73e0791123,subnet-02fceb818893321bf,subnet-0d28ecdf3c4e16fcb
+    TargetGroup:
+      HealthCheckPath: /
+      VpcId: vpc-05a3ffeccd31b040a
+
+  WAFv2:
+    WebACLAssociation:
+      WebACLArn: ""
